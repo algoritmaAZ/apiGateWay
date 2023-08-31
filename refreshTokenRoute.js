@@ -18,6 +18,6 @@ refreshTokenRoute.post("/user/refreshToken", async (req, res, next) => {
       .cookie("refreshToken", response.data.refreshToken)
       .send(response.data);
   } catch (err) {
-    res.send(err);
+    res.status(err.response.status).send(err.response.data);
   }
 });

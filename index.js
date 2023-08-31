@@ -18,13 +18,14 @@ apiGateWay.use(express.json());
 apiGateWay.post("/user/login", async (req, res, next) => {
   try {
     const response = await axios.post(`${authService}/user/login`, req.body);
+
     res
       .status(response.status)
       .cookie("token", response.data.token)
       .cookie("refreshToken", response.data.refreshToken)
       .send(response.data);
   } catch (err) {
-    res.send(err);
+    res.status(err.response.status).send(err.response.data);
   }
 });
 apiGateWay.use(privateRoute);

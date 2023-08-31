@@ -14,7 +14,6 @@ privateRoute.get("/user/:username", async (req, res, next) => {
     const response = await axios.get(`${userService}/user/${username}`);
     res.send(response.data);
   } catch (err) {
-    console.log(err);
-    res.send(err.TokenExpiredError);
+    res.status(err.response.status).send(err.response.data);
   }
 });
